@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.boot.SpringBootConfiguration;
 
 @SpringBootConfiguration
-public class GoodsImpl implements Goods {
+public class GoodsServiceImpl implements GoodsService {
 
   @Override
   public java.util.List<String> List() {

@@ -3,9 +3,9 @@ package com.hellojqk.jsbdemo.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.stereotype.Service;
 
-@SpringBootConfiguration
+@Service
 public class GoodsServiceImpl implements GoodsService {
 
   @Override

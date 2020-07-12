@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GoodsController {
 
-  Logger logger= LogManager.getLogger(this.getClass());
+  private Logger logger= LogManager.getLogger(this.getClass());
 
   @Resource
   private GoodsService goodsService;

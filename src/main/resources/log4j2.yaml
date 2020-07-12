@@ -23,7 +23,7 @@ Configuration:
         onMismatch: DENY
       PatternLayout:
         #显示日志模板
-        pattern: "%highlight{%d{yyyy-MM-dd HH:mm:ss,SSS}:what %4p %t (%F:%L) - %m%n}{STYLE=Logback}"
+        pattern: "%highlight{%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) -{%X{request_id}} %m%n}{STYLE=Logback}"
     RollingFile:
       - name: ROLLING_FILE
         ignoreExceptions: false

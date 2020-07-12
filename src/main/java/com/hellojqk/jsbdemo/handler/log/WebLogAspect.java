@@ -35,12 +35,11 @@ public class WebLogAspect {
     ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
     HttpServletRequest request = attributes.getRequest();
 
-    String reqID = request.getParameter("reqID");
-    logger.info("reqID:" + reqID);
-    ThreadContext.put("request_id", reqID);
+
     ThreadContext.put("X-Request-Id", request.getHeader("X-Request-Id"));
     ThreadContext.put("TraceID", request.getHeader("X-B3-Traceid"));
     String uid = UUID.randomUUID().toString();
+    ThreadContext.put("request_id", uid);
     // 记录请求内容
     logger.info("URL : " + request.getRequestURL().toString());
     logger.info("HTTP_METHOD : " + request.getMethod());

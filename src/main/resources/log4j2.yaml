@@ -8,7 +8,7 @@ Configuration:
         value: info
       - name: log.path
         #日志存放路径
-        value: ../logs
+        value: log
       - name: project.name
         #项目名称
         value: xxxx

@@ -5,7 +5,7 @@
   </Properties>
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%highlight{%d [%t] %-5level %l - %msg%n}" />
+      <PatternLayout pattern="%highlight{%d{HH:mm:ss.SSS} [%t] %highlight{%-5level} %highlight{%c.%M(%L)} - %msg%n}" />
     </Console>
     <File name="File" fileName="${fileName}">
       <JsonLayout compact="true" eventEol="true" properties="true" includeTimeMillis="true"/>

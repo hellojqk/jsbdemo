@@ -36,6 +36,8 @@ public class GoodsController {
     int count=redisTemplate.opsForValue().increment("jsbdemo:list").intValue();
     logger.info("hello world:{}",count);
 //    return goodsService.List();
+    int cartCount=accountCartService.count();
+    logger.info("hello world2:{}",cartCount);
     return accountCartService.findByPageAndParams(1,10);
   }
 }

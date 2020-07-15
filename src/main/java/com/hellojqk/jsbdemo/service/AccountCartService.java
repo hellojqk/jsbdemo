@@ -5,4 +5,5 @@ import org.springframework.data.domain.Page;
 
 public interface AccountCartService {
      Page<AccountCart> findByPageAndParams(int pageNumber, int pageSize);
+     int count();
 }

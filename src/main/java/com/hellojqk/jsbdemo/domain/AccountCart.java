@@ -1,5 +1,6 @@
 package com.hellojqk.jsbdemo.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "TAccountCart")
+@TableName("TAccountCart")
 public class AccountCart {
 
   @Id

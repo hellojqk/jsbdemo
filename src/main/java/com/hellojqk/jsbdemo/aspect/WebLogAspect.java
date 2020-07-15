@@ -1,4 +1,4 @@
-package com.hellojqk.jsbdemo.handler;
+package com.hellojqk.jsbdemo.aspect;
 
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 
 // import org.apache.logging.log4j.LogManager;
 // import org.apache.logging.log4j.Logger;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonSerializer;
 import org.apache.logging.log4j.ThreadContext;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -16,12 +20,14 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Aspect
 @Component
+@Order(2)
 public class WebLogAspect {
 
   // private Logger logger = LogManager.getLogger(this.getClass());
@@ -38,26 +44,24 @@ public class WebLogAspect {
     ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
     HttpServletRequest request = attributes.getRequest();
 
-
     ThreadContext.put("X-Request-Id", request.getHeader("X-Request-Id"));
     ThreadContext.put("TraceID", request.getHeader("X-B3-Traceid"));
     String uid = UUID.randomUUID().toString();
-    ThreadContext.put("request_id", uid);
+    ThreadContext.put("requestID", uid);
+
     // 记录请求内容
-    logger.info("URL : " + request.getRequestURL().toString());
-    logger.info("HTTP_METHOD : " + request.getMethod());
-    logger.info("IP : " + request.getRemoteAddr());
+    logger.info("URL : %s,HTTP_METHOD :%s,IP : %s", request.getRequestURL().toString(), request.getMethod(),
+        request.getRemoteAddr());
     logger.info(
         "CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-    logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+    logger.error("ARGS : " + Arrays.toString(joinPoint.getArgs()));
 
   }
 
   @AfterReturning(returning = "ret", pointcut = "webLog()")
   public void doAfterReturning(Object ret) throws Throwable {
-    System.out.println("after : " + LocalTime.now());
     // 处理完请求，返回内容
-    logger.info("RESPONCE : " + ret);
+    logger.info("Response:" + ret);
   }
 
 }

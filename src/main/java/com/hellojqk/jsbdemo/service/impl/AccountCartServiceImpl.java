@@ -5,18 +5,12 @@ import com.hellojqk.jsbdemo.domain.AccountCart;
 import com.hellojqk.jsbdemo.mapper.AccountCartMapper;
 import com.hellojqk.jsbdemo.repository.secdb.AccountCartRepository;
 import com.hellojqk.jsbdemo.service.AccountCartService;
-import net.bytebuddy.dynamic.scaffold.TypeWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.jaxb.OrderAdapter;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Transactional

@@ -50,7 +50,7 @@ public class WebLogAspect {
     ThreadContext.put("requestID", uid);
 
     // 记录请求内容
-    logger.info("URL : %s,HTTP_METHOD :%s,IP : %s", request.getRequestURL().toString(), request.getMethod(),
+    logger.info("URL : {},HTTP_METHOD :{},IP : {}", request.getRequestURL().toString(), request.getMethod(),
         request.getRemoteAddr());
     logger.info(
         "CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());

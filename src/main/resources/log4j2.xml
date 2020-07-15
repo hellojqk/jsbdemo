@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" monitorInterval="5">
   <Properties>
-    <Property></Property>
+    <Property name="fileName" value="log/hahaha.log" />
   </Properties>
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%highlight{%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n}{STYLE=Logback}" />
     </Console>
-    <File name="File" fileName="log/app.log">
-      <JsonLayout compact="true" eventEol="true" properties="true"></JsonLayout>
+    <File name="File" fileName="${fileName}">
+      <JsonLayout compact="true" eventEol="true" properties="true" />
     </File>
+    <RollingFile name="RollingFile" fileName="log/rollingApp.log" filePattern="logs/%d{MM-dd-yyyy}-%i.log.tar" ignoreExceptions="false">
+      <JsonLayout compact="true" eventEol="true" properties="true" />
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy size="50 MB" />
+      </Policies>
+    </RollingFile>
   </Appenders>
   <Loggers>
+    <!-- 指定某些包的日志写入特定Appender additivity设置为false则不向Root传递 -->
+    <!-- <Logger name="com.hellojqk.jsbdemo" level="info">
+      <AppenderRef ref="File" />
+      <AppenderRef ref="RollingFile" />
+    </Logger> -->
     <Root level="info">
       <AppenderRef ref="Console" />
-      <AppenderRef ref="File" />
+      <AppenderRef ref="RollingFile" />
     </Root>
   </Loggers>
 </Configuration>

@@ -1,7 +1,9 @@
-package com.hellojqk.jsbdemo.service;
+package com.hellojqk.jsbdemo.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.hellojqk.jsbdemo.service.GoodsService;
 
 // import org.apache.logging.log4j.LogManager;
 // import org.apache.logging.log4j.Logger;

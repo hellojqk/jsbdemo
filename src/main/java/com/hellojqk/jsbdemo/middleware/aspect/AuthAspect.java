@@ -1,4 +1,4 @@
-package com.hellojqk.jsbdemo.aspect;
+package com.hellojqk.jsbdemo.middleware.aspect;
 
 import org.apache.logging.log4j.ThreadContext;
 import org.aspectj.lang.JoinPoint;
@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author wangyang
+ */
 @Aspect
 @Component
 @Order(1)
@@ -17,7 +20,7 @@ public class AuthAspect {
 
   private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
-  @Pointcut("execution(* com.hellojqk.jsbdemo.controller.*.*(..))")
+  @Pointcut("execution(* com.hellojqk.*.controller.*.*(..))")
   public void auth() {
 
   }

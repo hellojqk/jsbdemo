@@ -10,7 +10,7 @@
     <File name="File" fileName="${fileName}">
       <JsonLayout compact="true" eventEol="true" properties="true" includeTimeMillis="true"/>
     </File>
-    <RollingFile name="RollingFile" fileName="log/rollingApp.log" filePattern="logs/%d{MM-dd-yyyy}-%i.log.tar" ignoreExceptions="false">
+    <RollingFile name="RollingFile" fileName="log/rollingApp.log" filePattern="log/%d{MM-dd-yyyy}-%i.log.tar" ignoreExceptions="false">
       <JsonLayout compact="true" eventEol="true" properties="true" includeTimeMillis="true"/>
       <Policies>
         <TimeBasedTriggeringPolicy />
@@ -26,7 +26,7 @@
     </Logger> -->
     <Root level="info">
       <AppenderRef ref="Console" />
-      <AppenderRef ref="File" />
+      <!-- <AppenderRef ref="File" /> -->
       <AppenderRef ref="RollingFile" />
     </Root>
   </Loggers>

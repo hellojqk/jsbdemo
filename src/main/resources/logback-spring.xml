@@ -1,0 +1,58 @@
+<configuration>
+
+    <contextName>spring-boot-demo</contextName>
+
+    <!--各项目日志保存统一父目录->路径自己设置绝对路径和相对路径都可以-->
+    <property name="LOG_DIR" value="log" />
+    <!--最大保存天数-->
+    <property name="KEEP_MAX_DAY" value="14" />
+    <!--总最大保存文件大小-->
+    <property name="KEEP_TOTAL_MAX_SIZE" value="1GB" />
+    <!--单文件最大保存文件大小-->
+    <property name="KEEP_FILE_MAX_SIZE" value="100MB" />
+
+    <!--输出到控制台-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--这个的参数配置在 http://logback.qos.ch/manual/layouts.html-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) --- [%thread] %cyan(%logger): %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--输出到ERROR事件记录文件-->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--            <level>ERROR</level>-->
+<!--            <onMatch>ACCEPT</onMatch>-->
+<!--            <onMismatch>DENY</onMismatch>-->
+<!--        </filter>-->
+
+        <file>${LOG_DIR}/app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/app-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>${KEEP_FILE_MAX_SIZE}</maxFileSize>
+            <maxHistory>${KEEP_MAX_DAY}</maxHistory>
+            <totalSizeCap>${KEEP_TOTAL_MAX_SIZE}</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.hellojqk.jsbdemo.config.LogBackLayoutConfig" />
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework.jdbc.core" level="debug" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+
+    <logger name="com.springboot.web.dynamic_debug" level="debug" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+
+
+    <root level="info">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+    </root>
+
+</configuration>

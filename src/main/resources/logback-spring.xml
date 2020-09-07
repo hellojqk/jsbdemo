@@ -1,6 +1,9 @@
 <configuration>
 
     <contextName>spring-boot-demo</contextName>
+    <property resource="application.properties"/>
+    <springProperty scope="context" name="group" source="group"/>
+    <springProperty scope="context" name="project" source="spring.application.name"/>
 
     <!--各项目日志保存统一父目录->路径自己设置绝对路径和相对路径都可以-->
     <property name="LOG_DIR" value="log" />
@@ -21,7 +24,6 @@
 
     <!--输出到ERROR事件记录文件-->
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-
 <!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
 <!--            <level>ERROR</level>-->
 <!--            <onMatch>ACCEPT</onMatch>-->
@@ -37,7 +39,10 @@
         </rollingPolicy>
 
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="com.hellojqk.jsbdemo.config.LogBackLayoutConfig" />
+            <layout class="com.hellojqk.jsbdemo.config.LogBackLayoutConfig">
+                <group>${group}</group>
+                <project>${project}</project>
+            </layout>
         </encoder>
     </appender>
 

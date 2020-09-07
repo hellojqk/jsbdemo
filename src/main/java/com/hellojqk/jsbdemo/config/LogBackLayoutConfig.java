@@ -4,7 +4,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.LayoutBase;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
@@ -14,14 +14,20 @@ import java.util.Map;
  */
 public class LogBackLayoutConfig extends LayoutBase<ILoggingEvent> {
 
-    @Value("${group}")
-    public String group;
+    private String group;
+    private String project;
 
-    @Value("${spring.application.name}")
-    public String project;
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
+    }
 
     @Override
     public String doLayout(ILoggingEvent event) {
+
         StringBuffer sbuf = new StringBuffer(128);
         sbuf.append(CoreConstants.CURLY_LEFT);
         addFields(sbuf, "group", group);

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 // import org.apache.logging.log4j.LogManager;
 // import org.apache.logging.log4j.Logger;
 //import org.apache.logging.log4j.ThreadContext;
+import com.hellojqk.jsbdemo.constant.LoggerConstants;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -44,14 +45,14 @@ public class WebLogAspect {
     ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
     HttpServletRequest request = attributes.getRequest();
 
-//    ThreadContext.put("X-Request-Id", request.getHeader("X-Request-Id"));
-//    ThreadContext.put("TraceID", request.getHeader("X-B3-Traceid"));
-    String uid = UUID.randomUUID().toString();
-//    ThreadContext.put("requestID", uid);
+    MDC.put(LoggerConstants.XRequestId,request.getHeader("X-Request-Id"));
+    MDC.put(LoggerConstants.TraceId,request.getHeader("X-B3-Traceid"));
+    final String uid = UUID.randomUUID().toString();
+    MDC.put(LoggerConstants.XRequestId,uid);
+    String clientIp = request.getRemoteAddr();
+    MDC.put(LoggerConstants.ClientIp,clientIp);
+    MDC.put(LoggerConstants.Title,LoggerConstants.HTTPRequest);
 
-      MDC.put("xRequestId", request.getHeader("X-Request-Id"));
-      MDC.put("traceId", request.getHeader("X-B3-Traceid"));
-      MDC.put("requestId", uid);
     // 记录请求内容
     logger.info("Request:URL : {} ,HTTP_METHOD :{},IP : {}", request.getRequestURL().toString(), request.getMethod(),
         request.getRemoteAddr());

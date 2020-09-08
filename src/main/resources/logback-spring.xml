@@ -20,7 +20,7 @@
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="com.hellojqk.jsbdemo.config.LogBackLayoutConfig">
+            <layout class="com.hellojqk.jsbdemo.config.JsonLayout">
                 <group>${group}</group>
                 <project>${project}</project>
             </layout>

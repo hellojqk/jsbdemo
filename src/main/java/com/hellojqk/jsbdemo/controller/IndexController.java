@@ -13,18 +13,20 @@ import org.slf4j.MDC;
 @RestController
 public class IndexController {
 
-  private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
+    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-  @GetMapping("/")
-  public String index() {
-    MDC.put("what","哈哈哈");
-    logger.info("哈哈哈哈");
-    return "hellojqk";
-  }
-  @GetMapping("/error")
-  public String error() {
-    String aaa="张三";
+    @GetMapping("/")
+    public String index() {
+        MDC.put("what", "哈哈哈");
+        logger.info("哈哈哈哈{}wwwww{}", "喽", 250);
+        logger.error("异常了{}wwwww{}", "喽", 250);
+        return "hellojqk";
+    }
+
+    @GetMapping("/error")
+    public String error() {
+        String aaa = "张三";
 //    Integer.parseInt(aaa);
-    return "hellojqk";
-  }
+        return "hellojqk";
+    }
 }

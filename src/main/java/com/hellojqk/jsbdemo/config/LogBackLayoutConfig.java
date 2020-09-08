@@ -1,10 +1,10 @@
 package com.hellojqk.jsbdemo.config;
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.*;
 import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.LayoutBase;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
@@ -25,6 +25,7 @@ public class LogBackLayoutConfig extends LayoutBase<ILoggingEvent> {
         this.project = project;
     }
 
+
     @Override
     public String doLayout(ILoggingEvent event) {
 
@@ -34,7 +35,6 @@ public class LogBackLayoutConfig extends LayoutBase<ILoggingEvent> {
         addFields(sbuf, "project", project);
         addFields(sbuf, "level", event.getLevel().toString().toLowerCase());
         addFields(sbuf, "title", MDC.get("title"));
-        addFields(sbuf, "detail", event.getMessage());
         addFields(sbuf, "timestamp", event.getTimeStamp());
         event.getThrowableProxy();
         event.getCallerData();
@@ -50,6 +50,18 @@ public class LogBackLayoutConfig extends LayoutBase<ILoggingEvent> {
 //            }
         }
 
+
+        if (event.getLevel() == Level.ERROR) {
+            IThrowableProxy iThrowableProxy = event.getThrowableProxy();
+            String msg = event.getFormattedMessage() + CoreConstants.LINE_SEPARATOR;
+            //确认抛出异常
+            if (iThrowableProxy != null && iThrowableProxy instanceof ThrowableProxy) {
+                msg = String.format("%s%s", msg, ThrowableProxyUtil.asString(iThrowableProxy));
+            }
+            addFields(sbuf, "detail", replace(msg));
+        } else {
+            addFields(sbuf, "detail", replace(event.getFormattedMessage()));
+        }
 
         Map<String, String> contextMap = event.getMDCPropertyMap();
         if (!contextMap.isEmpty()) {
@@ -80,5 +92,10 @@ public class LogBackLayoutConfig extends LayoutBase<ILoggingEvent> {
         sbuf.append(value);
         sbuf.append(CoreConstants.DOUBLE_QUOTE_CHAR);
         sbuf.append(CoreConstants.COMMA_CHAR);
+    }
+
+    public String replace(String str) {
+//        return str.replace("\"", "\\\"");
+        return str.replace("\"","\\\"").replace("\r","\\r").replace("\n","\\n");
     }
 }

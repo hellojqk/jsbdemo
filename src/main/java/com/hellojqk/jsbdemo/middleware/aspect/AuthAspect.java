@@ -1,5 +1,6 @@
 package com.hellojqk.jsbdemo.middleware.aspect;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,9 +18,10 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @Order(1)
+@Slf4j
 public class AuthAspect {
 
-  private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
+//  private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
   @Pointcut("execution(* com.hellojqk.*.controller.*.*(..))")
   public void auth() {
@@ -28,7 +30,7 @@ public class AuthAspect {
 
   @Before("auth()")
   public void doBefore(JoinPoint joinPoint) throws Throwable {
-    logger.info("auth");
+    log.info("auth");
     MDC.put("userId", "9527");
   }
 }

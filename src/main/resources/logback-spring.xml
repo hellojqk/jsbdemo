@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds">
-    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
-    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <!--这里使用的是spring-boot提供的标准console彩色输出-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
     <contextName>spring-boot-demo</contextName>
+    <!-- 注意这里要配置你们的application文件格式 -->
     <property resource="application.properties"/>
     <springProperty scope="context" name="group" source="group"/>
     <springProperty scope="context" name="project" source="spring.application.name"/>
 
-    <!--各项目日志保存统一父目录->路径自己设置绝对路径和相对路径都可以-->
-    <property name="LOG_DIR" value="log" />
-
+    <!--注意以下输出日志目录不要改动，使用k8s后我们会统一使用采集插件采集日志-->
+    <property name="LOG_DIR" value="log"/>
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/app.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -20,6 +21,7 @@
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <!--主要是这里引入了我们的JsonLayout-->
             <layout class="com.hellojqk.jsbdemo.config.JsonLayout">
                 <group>${group}</group>
                 <project>${project}</project>
@@ -27,13 +29,9 @@
         </encoder>
     </appender>
 
-    <logger name="org.mybatis" level="INFO"/>
-    <logger name="org.springframework" level="WARN"/>
-    <logger name="org.apache" level="WARN"/>
-
     <root level="info">
-        <appender-ref ref="CONSOLE" />
-        <appender-ref ref="FILE" />
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
     </root>
 
 </configuration>
